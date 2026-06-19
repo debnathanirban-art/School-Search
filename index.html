@@ -340,6 +340,8 @@ function formatChecked(raw) {
   if (isNaN(d.getTime())) return escapeHtml(String(raw));
   return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 }
+
+function escapeHtml(str) {
   if (!str) return '';
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
