@@ -264,7 +264,41 @@
     text-underline-offset: 2px;
   }
 
-  .last-checked { font-size: 0.78rem; color: var(--ink-soft); white-space: nowrap; }
+  .detail-toggle {
+    background: none;
+    border: none;
+    color: var(--tram);
+    font-size: 0.74rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .detail-panel {
+    display: none;
+    margin-top: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.8rem;
+  }
+
+  .detail-panel.open { display: grid; }
+
+  .detail-item { display: flex; flex-direction: column; gap: 0.15rem; }
+  .detail-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+  .detail-value { color: var(--ink); font-weight: 500; word-break: break-all; }
+  .detail-value a { color: var(--tram); text-decoration: none; }
+  .detail-value a:hover { text-decoration: underline; }
 
   .empty-state, .loading {
     text-align: center;
@@ -345,6 +379,12 @@ let allSchools = [];
 let sortKey = 'schoolName';
 let sortDir = 1;
 
+function toggleDetail(id, btn) {
+  const panel = document.getElementById(id);
+  const open = panel.classList.toggle('open');
+  btn.textContent = open ? '▾ Details' : '▸ Details';
+}
+
 function snippetHtml(raw) {
   if (!raw) return '—';
   const text = String(raw).replace(/\s*\}$/, '').trim();
@@ -417,12 +457,26 @@ function renderTable() {
     return `<th data-key="${key}">${label}${arrow}</th>`;
   };
 
-  let rows = filtered.map(s => {
+  let rows = filtered.map((s, i) => {
+    const id = `detail-${i}`;
+    const phone = escapeHtml(s['Phone']) || '—';
+    const email = s['Email'] ? `<a href="mailto:${escapeHtml(s['Email'])}">${escapeHtml(s['Email'])}</a>` : '—';
+    const principal = escapeHtml(s['Principal']) || '—';
+    const status = escapeHtml(s['School Status']) || '—';
+    const affiliate = escapeHtml(s['Affiliate ID']) || '—';
+
     return `
       <tr>
         <td>
           <div class="school-name">${escapeHtml(s.schoolName)}</div>
-          ${s.schoolLink ? `<a class="school-link" href="${escapeHtml(s.schoolLink)}" target="_blank" rel="noopener">View source ↗</a>` : ''}
+          <button class="detail-toggle" onclick="toggleDetail('${id}', this)">▸ Details</button>
+          <div class="detail-panel" id="${id}">
+            <div class="detail-item"><span class="detail-label">📞 Phone</span><span class="detail-value">${phone}</span></div>
+            <div class="detail-item"><span class="detail-label">📧 Email</span><span class="detail-value">${email}</span></div>
+            <div class="detail-item"><span class="detail-label">👤 Principal</span><span class="detail-value">${principal}</span></div>
+            <div class="detail-item"><span class="detail-label">🏫 Status</span><span class="detail-value">${status}</span></div>
+            <div class="detail-item"><span class="detail-label">🔢 Affiliate ID</span><span class="detail-value">${affiliate}</span></div>
+          </div>
         </td>
         <td class="address">${escapeHtml(s.Address) || '—'}</td>
         <td class="snippet">${snippetHtml(s['Admission Snippet'])}</td>
