@@ -326,19 +326,13 @@ let sortDir = 1;
 
 function formatChecked(raw) {
   if (!raw) return '—';
-  let d = new Date(raw);
-  if (isNaN(d.getTime())) {
-    // Try common non-ISO patterns like "17/06/2026" or "17-06-2026 10:30:00"
-    const match = String(raw).match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
-    if (match) {
-      const [, a, b, y] = match;
-      const year = y.length === 2 ? '20' + y : y;
-      // Assume DD/MM/YYYY since that's the common non-US format
-      d = new Date(`${year}-${b.padStart(2,'0')}-${a.padStart(2,'0')}`);
-    }
+  // ISO timestamps like "2026-06-17T18:58:30.518" — parse directly
+  const d = new Date(raw);
+  if (!isNaN(d.getTime())) {
+    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
   }
-  if (isNaN(d.getTime())) return escapeHtml(String(raw));
-  return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  // Last resort: show raw string
+  return escapeHtml(String(raw));
 }
 
 function escapeHtml(str) {
