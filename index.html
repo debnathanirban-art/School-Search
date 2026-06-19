@@ -406,18 +406,17 @@ function toggleSnippet(btn) {
 
 function formatChecked(raw) {
   if (!raw) return '—';
-  // Strip any trailing junk characters (e.g. stray } from n8n expressions)
   const cleaned = String(raw).replace(/[^0-9T:\-\.Z+]/g, '').trim();
   const d = new Date(cleaned);
   if (!isNaN(d.getTime())) {
     return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
   }
-  return escapeHtml(String(raw));
+  return String(raw);
 }
 
 function escapeHtml(str) {
-  if (!str) return '';
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  if (str === null || str === undefined) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function renderTable() {
