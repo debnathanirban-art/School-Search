@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kolkata School Admissions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f1e6;
+    --paper-deep: #efe7d6;
+    --ink: #1c1b1f;
+    --ink-soft: #5c5847;
+    --taxi: #e8a317;
+    --taxi-deep: #b87f0e;
+    --tram: #0c5c4a;
+    --tram-soft: #e3efe9;
+    --rule: rgba(28, 27, 31, 0.13);
+    --card: #fffcf4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--paper);
+  }
+
+  body {
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 1100px 500px at 100% 0%, rgba(232, 163, 23, 0.10), transparent 60%),
+      radial-gradient(ellipse 900px 600px at 0% 100%, rgba(12, 92, 74, 0.07), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .content { position: relative; z-index: 1; }
+
+  .header {
+    padding: 3.5rem 2rem 2rem;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.6rem;
+  }
+
+  .seal {
+    flex-shrink: 0;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    border: 2px solid var(--tram);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transform: rotate(-9deg);
+    color: var(--tram);
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.25;
+    position: relative;
+    margin-top: 0.3rem;
+  }
+
+  .seal::before {
+    content: '';
+    position: absolute;
+    inset: 7px;
+    border: 1px dashed var(--tram);
+    border-radius: 50%;
+    opacity: 0.55;
+  }
+
+  .header-text { flex: 1; min-width: 0; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.9rem;
+  }
+
+  .eyebrow .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--taxi);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(2.1rem, 4.2vw, 3rem);
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+    color: var(--ink);
+  }
+
+  .subtitle {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    margin-top: 0.85rem;
+    max-width: 600px;
+    line-height: 1.55;
+  }
+
+  .controls {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 2rem 1.5rem;
+    display: flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 240px;
+    position: relative;
+  }
+
+  .search-box svg {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    stroke: var(--ink-soft);
+    pointer-events: none;
+  }
+
+  .search-box input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.8rem 1rem 0.8rem 2.6rem;
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .search-box input:focus {
+    outline: none;
+    border-color: var(--tram);
+    box-shadow: 0 0 0 3px var(--tram-soft);
+  }
+
+  .search-box input::placeholder { color: var(--ink-soft); opacity: 0.7; }
+
+  .meta-row {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 2rem 1rem;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+
+  .meta-row strong { color: var(--tram); font-weight: 700; }
+
+  .grid-wrap {
+    max-width: 1240px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+  }
+
+  .table-card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(28,27,31,0.04);
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+
+  thead th {
+    text-align: left;
+    padding: 1rem 1.3rem;
+    border-bottom: 2px solid var(--ink);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    transition: color 0.15s ease;
+  }
+
+  thead th:hover { color: var(--tram); }
+  thead th .arrow { margin-left: 0.3rem; color: var(--taxi-deep); }
+
+  tbody tr {
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s ease;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--paper-deep); }
+
+  tbody td { padding: 1.1rem 1.3rem; vertical-align: top; }
+
+  .school-name { font-weight: 600; color: var(--ink); font-size: 0.93rem; }
+
+  .school-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    margin-top: 0.35rem;
+    transition: color 0.15s ease;
+  }
+
+  .school-link:hover { color: var(--tram); }
+
+  .address { color: var(--ink-soft); max-width: 250px; line-height: 1.45; font-size: 0.85rem; }
+
+  .snippet { color: var(--ink-soft); font-size: 0.82rem; max-width: 300px; line-height: 1.45; }
+
+  .last-checked { font-size: 0.78rem; color: var(--ink-soft); white-space: nowrap; }
+
+  .empty-state, .loading {
+    text-align: center;
+    padding: 4.5rem 2rem;
+    color: var(--ink-soft);
+  }
+
+  .empty-state .icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.6;
+  }
+
+  .loading::after {
+    content: '';
+    display: inline-block;
+    width: 14px; height: 14px;
+    margin-left: 0.6rem;
+    border: 2px solid var(--rule);
+    border-top-color: var(--tram);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .error-box .inner {
+    border: 1px solid rgba(184, 39, 24, 0.35);
+    background: rgba(184, 39, 24, 0.06);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    color: #8a2415;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 700px) {
+    .header { padding: 2.5rem 1.25rem 1.5rem; gap: 1rem; }
+    .seal { width: 56px; height: 56px; font-size: 0.5rem; }
+    .controls, .meta-row, .grid-wrap { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .address, .snippet { max-width: 150px; }
+    table { font-size: 0.8rem; }
+    tbody td, thead th { padding: 0.85rem 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="content">
+  <div class="header">
+    <div class="seal">Admission<br>Registry<br>Kolkata</div>
+    <div class="header-text">
+      <div class="eyebrow"><span class="dot"></span>CBSE · Kolkata &amp; Suburbs</div>
+      <h1>School Admissions Tracker</h1>
+      <p class="subtitle">A running record of CBSE schools in and around Kolkata, with admission signals pulled from public search results. Status is a best guess, not a confirmation — call the school to verify.</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="searchInput" placeholder="Search by school name or area…" />
+    </div>
+  </div>
+
+  <div class="meta-row" id="metaRow"></div>
+
+  <div class="grid-wrap" id="gridWrap">
+    <div class="table-card"><div class="loading">Fetching records</div></div>
+  </div>
+</div>
+
+<script>
+const WEBHOOK_URL = 'https://none22061986.app.n8n.cloud/webhook/school-directory';
+
+let allSchools = [];
+let sortKey = 'schoolName';
+let sortDir = 1;
+
+function formatChecked(raw) {
+  if (!raw) return '—';
+  let d = new Date(raw);
+  if (isNaN(d.getTime())) {
+    // Try common non-ISO patterns like "17/06/2026" or "17-06-2026 10:30:00"
+    const match = String(raw).match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+    if (match) {
+      const [, a, b, y] = match;
+      const year = y.length === 2 ? '20' + y : y;
+      // Assume DD/MM/YYYY since that's the common non-US format
+      d = new Date(`${year}-${b.padStart(2,'0')}-${a.padStart(2,'0')}`);
+    }
+  }
+  if (isNaN(d.getTime())) return escapeHtml(String(raw));
+  return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function renderTable() {
+  const wrap = document.getElementById('gridWrap');
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+  let filtered = allSchools.filter(s => {
+    return !searchTerm ||
+      (s.schoolName || '').toLowerCase().includes(searchTerm) ||
+      (s.Address || '').toLowerCase().includes(searchTerm);
+  });
+
+  filtered.sort((a, b) => {
+    const av = (a[sortKey] || '').toString().toLowerCase();
+    const bv = (b[sortKey] || '').toString().toLowerCase();
+    if (av < bv) return -1 * sortDir;
+    if (av > bv) return 1 * sortDir;
+    return 0;
+  });
+
+  document.getElementById('metaRow').innerHTML =
+    `<strong>${filtered.length}</strong> of ${allSchools.length} schools shown`;
+
+  if (filtered.length === 0) {
+    wrap.innerHTML = `
+      <div class="table-card">
+        <div class="empty-state">
+          <div class="icon">∅</div>
+          <div>No schools match your search. Try a different name or area.</div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const colLabel = (key, label) => {
+    const arrow = sortKey === key ? `<span class="arrow">${sortDir === 1 ? '↑' : '↓'}</span>` : '';
+    return `<th data-key="${key}">${label}${arrow}</th>`;
+  };
+
+  let rows = filtered.map(s => {
+    return `
+      <tr>
+        <td>
+          <div class="school-name">${escapeHtml(s.schoolName)}</div>
+          ${s.schoolLink ? `<a class="school-link" href="${escapeHtml(s.schoolLink)}" target="_blank" rel="noopener">View source ↗</a>` : ''}
+        </td>
+        <td class="address">${escapeHtml(s.Address) || '—'}</td>
+        <td class="snippet">${escapeHtml(s['Admission Snippet']) || '—'}</td>
+        <td class="last-checked">${formatChecked(s['Last Checked'])}</td>
+      </tr>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            ${colLabel('schoolName', 'School')}
+            ${colLabel('Address', 'Address')}
+            <th>Admission Detail</th>
+            ${colLabel('Last Checked', 'Checked')}
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+
+  document.querySelectorAll('thead th[data-key]').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.getAttribute('data-key');
+      if (sortKey === key) { sortDir *= -1; } else { sortKey = key; sortDir = 1; }
+      renderTable();
+    });
+  });
+}
+
+async function loadData() {
+  const wrap = document.getElementById('gridWrap');
+  try {
+    const res = await fetch(WEBHOOK_URL);
+    if (!res.ok) throw new Error('Request failed with status ' + res.status);
+    const data = await res.json();
+    allSchools = data.schools || [];
+    renderTable();
+  } catch (err) {
+    wrap.innerHTML = `
+      <div class="error-box">
+        <div class="inner">Couldn't load school records (${escapeHtml(err.message)}). Open the webhook URL directly in a new tab — if it shows JSON there but not here, the n8n workflow needs CORS headers on the Respond to Webhook node. If it errors there too, the workflow isn't active.</div>
+      </div>`;
+  }
+}
+
+document.getElementById('searchInput').addEventListener('input', renderTable);
+
+loadData();
+</script>
+
+</body>
+</html>
