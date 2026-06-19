@@ -326,12 +326,12 @@ let sortDir = 1;
 
 function formatChecked(raw) {
   if (!raw) return '—';
-  // ISO timestamps like "2026-06-17T18:58:30.518" — parse directly
-  const d = new Date(raw);
+  // Strip any trailing junk characters (e.g. stray } from n8n expressions)
+  const cleaned = String(raw).replace(/[^0-9T:\-\.Z+]/g, '').trim();
+  const d = new Date(cleaned);
   if (!isNaN(d.getTime())) {
     return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
   }
-  // Last resort: show raw string
   return escapeHtml(String(raw));
 }
 
